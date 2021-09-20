@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.4'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id "org.hibernate.orm" version "6.0.0.Alpha9"
+}
+
+group = 'com.gps'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.5.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.4'
+    implementation 'mysql:mysql-connector-java:8.0.25'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.4'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootBuildImage {
+    builder = 'paketobuildpacks/builder:tiny'
+    environment = ['BP_NATIVE_IMAGE': 'true']
+}

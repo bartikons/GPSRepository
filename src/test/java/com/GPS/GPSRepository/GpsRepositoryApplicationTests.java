@@ -54,25 +54,9 @@ class GpsRepositoryApplicationTests {
     void nullTest() {
         GPSDataCommands gpsDataCommands = new GPSDataCommands();
         gpsDataCommands.setDeviceId(12345L);
-        gpsDataCommands.setLatitude(null);
-        gpsDataCommands.setLongitude(1423412L);
-
-        GPSDataCommands gpsDataCommands2 = new GPSDataCommands();
-        gpsDataCommands.setDeviceId(null);
-        gpsDataCommands.setLatitude(505430L);
-        gpsDataCommands.setLongitude(1423412L);
-
-
-        GPSDataCommands gpsDataCommands3 = new GPSDataCommands();
-        gpsDataCommands.setDeviceId(12345L);
         gpsDataCommands.setLatitude(505430L);
         gpsDataCommands.setLongitude(null);
 
-
-        GPSDataCommands gpsDataCommands4 = new GPSDataCommands();
-        gpsDataCommands.setDeviceId(null);
-        gpsDataCommands.setLatitude(null);
-        gpsDataCommands.setLongitude(null);
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -84,15 +68,17 @@ class GpsRepositoryApplicationTests {
                     .andExpect(status().isNotAcceptable());
             mockMvc.perform(post("/api")
                             .contentType("application/json")
-                            .content(ow.writeValueAsString(gpsDataCommands2)))
+                            .content(ow.writeValueAsString(gpsDataCommands)))
                     .andExpect(status().isNotAcceptable());
+            gpsDataCommands.setLatitude(null);
             mockMvc.perform(post("/api")
                             .contentType("application/json")
-                            .content(ow.writeValueAsString(gpsDataCommands3)))
+                            .content(ow.writeValueAsString(gpsDataCommands)))
                     .andExpect(status().isNotAcceptable());
+            gpsDataCommands.setDeviceId(null);
             mockMvc.perform(post("/api")
                             .contentType("application/json")
-                            .content(ow.writeValueAsString(gpsDataCommands4)))
+                            .content(ow.writeValueAsString(gpsDataCommands)))
                     .andExpect(status().isNotAcceptable());
         } catch (Exception e) {
             e.printStackTrace();
